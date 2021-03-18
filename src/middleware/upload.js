@@ -1,5 +1,6 @@
 const util = require("util");
 const multer = require("multer");
+var path = require('path')
 const maxSize = 2 * 1024 * 1024;
 // const fileType = "json";
 
@@ -17,11 +18,14 @@ let uploadFile = multer({
   storage: storage,
   limits: { fileSize: maxSize },
   fileFilter: function (req, file, cb) {
-    if (path.extension(file.originalname) !== '.json') {
-        // return cb(null, false);
-        cb("Error: only png, jpeg, and jpg are allowed!");
+
+    if (!file.originalname.match(/\.(json)$/)) {
+      return cb(new Error('Only JSON files are allowed!'));
     }
-    cb(null, true)
+
+    /* Validar el contenido del archivo */
+
+    return cb(null, true)
   }
 }).single("file");
 
