@@ -16,13 +16,13 @@ let storage = multer.diskStorage({
 let uploadFile = multer({
   storage: storage,
   limits: { fileSize: maxSize },
-  fileFilter: function (req, file, cb) {
-    if (path.extension(file.originalname) !== '.json') {
-        // return cb(null, false);
-        cb("Error: only png, jpeg, and jpg are allowed!");
-    }
-    cb(null, true)
-  }
+//   fileFilter: function (req, file, cb) {
+//     if (path.extension(file.originalname) !== '.json') {
+//         // return cb(null, false);
+//         cb("Error: only png, jpeg, and jpg are allowed!");
+//     }
+//     cb(null, true)
+//   }
 }).single("file");
 
 let uploadFileMiddleware = util.promisify(uploadFile);
