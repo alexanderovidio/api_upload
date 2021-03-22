@@ -5,9 +5,13 @@ const simpleAlgebra = require("simplealgebra");
 const validator = require("validator");
 const admin = require("firebase-admin");
 
+//const serviceAccount = require('./credentials.json');
+
 admin.initializeApp({
-  credential: admin.credential.cert('./credentials.json')
+  credential: admin.credential.cert('./credentials.json'),
+  databaseURL: "https://math-operations-b63b4-default-rtdb.firebaseio.com/"
 });
+
 const upload = async (req, res) => {
   try {
     const directoryPath = __basedir + "/resources/static/assets/uploads/";
@@ -57,13 +61,20 @@ const upload = async (req, res) => {
 
     /* Insert a la base de datos */
     const db = admin.firestore();
+
+    const data = {
+      nombre: 'Los Angeles',
+      email: 'CA',
+      telefono: 'USA'
+    };
+
+    const response = await db.collection('usuarios').doc('LA').set(data);
+
+    console.log(response)
+
     //console.log(req.file);
       // await 
-      db.collection("products")
-        .doc("/"+ req.body.id + "/")
-        .create({
-          name: req.body.name
-        });
+      
       // return res.status(204).json();
 
       // console.log(error);
@@ -73,9 +84,12 @@ const upload = async (req, res) => {
     //   .create({});
 
   } catch (err) {
-    res.status(500).send({
-      message: `Could not upload the file: ${err}`,
-    });
+
+    // res.status(500).send({
+    //   message: `Could not upload the file: ${err}`,
+    // });
+
+    console.log(err)
   }
 };
 
