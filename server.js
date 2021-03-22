@@ -2,13 +2,15 @@ const cors = require("cors");
 const express = require("express");
 const app = express();
 
+
 global.__basedir = __dirname;
 
 var corsOptions = {
   origin: "http://localhost:8080"
 };
 
-app.use(cors(corsOptions));
+app.use(cors())
+// app.use(cors(corsOptions));
 
 const initRoutes = require("./src/routes");
 
